@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f1e7">
+
+  <title>Nurtilek & Aidana | Wedding Invitation</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    /* =========================================================
+       GLOBAL
+    ========================================================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f8f1e7;
+      color: #55483a;
+      font-family: "Montserrat", sans-serif;
+      overflow-x: hidden;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+
+    /* =========================================================
+       OPENING SCREEN
+    ========================================================= */
+
+    #openingScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        radial-gradient(
+          circle at center,
+          #fffdf9 0%,
+          #f9f2e8 55%,
+          #eadcc9 100%
+        );
+
+      transition:
+        opacity 1s ease,
+        visibility 1s ease;
+    }
+
+    #openingScreen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .opening-content {
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .opening-small-title {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #9c835f;
+      margin-bottom: 20px;
+    }
+
+    .opening-names {
+      font-family: "Great Vibes", cursive;
+      font-size: 58px;
+      font-weight: 400;
+      color: #9b7746;
+      margin-bottom: 35px;
+    }
+
+
+    /* =========================================================
+       ENVELOPE
+    ========================================================= */
+
+    .envelope-container {
+      width: min(360px, 85vw);
+      height: 245px;
+      margin: auto;
+      position: relative;
+      cursor: pointer;
+
+      filter:
+        drop-shadow(
+          0 20px 30px rgba(80, 60, 40, 0.18)
+        );
+
+      perspective: 1000px;
+    }
+
+    .envelope-body {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 25px;
+
+      background: #fffdf9;
+      border: 1px solid #d7c4a5;
+      border-radius: 6px;
+
+      overflow: hidden;
+    }
+
+    .envelope-body::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          135deg,
+          transparent 49.5%,
+          #eadcc7 50%,
+          transparent 50.5%
+        ),
+        linear-gradient(
+          225deg,
+          transparent 49.5%,
+          #eadcc7 50%,
+          transparent 50.5%
+        );
+    }
+
+    .envelope-message {
+      position: absolute;
+      z-index: 2;
+
+      width: 100%;
+      top: 85px;
+
+      text-align: center;
+
+      font-family: "Cormorant Garamond", serif;
+      font-size: 24px;
+
+      color: #806441;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      z-index: 4;
+
+      top: 25px;
+      left: 0;
+
+      width: 100%;
+      height: 150px;
+
+      background: #f8efe2;
+
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 75%
+      );
+
+      transform-origin: top center;
+
+      transition:
+        transform 1.1s cubic-bezier(
+          0.2,
+          0.75,
+          0.2,
+          1
+        );
+
+      border-top: 1px solid #d5c09f;
+    }
+
+    .envelope-seal {
+      position: absolute;
+      z-index: 6;
+
+      left: 50%;
+      top: 112px;
+
+      transform: translateX(-50%);
+
+      width: 58px;
+      height: 58px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: #bd9b61;
+      color: white;
+
+      font-family: "Great Vibes", cursive;
+      font-size: 24px;
+
+      box-shadow:
+        0 5px 15px rgba(90, 60, 30, 0.2);
+
+      transition: opacity 0.4s ease;
+    }
+
+    .envelope-container.opened .envelope-flap {
+      transform: rotateX(178deg);
+    }
+
+    .envelope-container.opened .envelope-seal {
+      opacity: 0;
+    }
+
+    .open-text {
+      margin-top: 25px;
+
+      font-size: 11px;
+      letter-spacing: 3px;
+
+      color: #8d7961;
+
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+
+    /* =========================================================
+       MAIN WEBSITE
+    ========================================================= */
+
+    #mainWebsite {
+      opacity: 0;
+      transform: translateY(25px);
+
+      transition:
+        opacity 1.2s ease,
+        transform 1.2s ease;
+    }
+
+    #mainWebsite.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* =========================================================
+       HERO SECTION
+    ========================================================= */
+
+    .hero {
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px 18px;
+
+      background:
+        linear-gradient(
+          rgba(255, 253, 249, 0.55),
+          rgba(255, 253, 249, 0.78)
+        ),
+        url("assets/floral_invitation.jpg")
+        center / cover no-repeat;
+    }
+
+    .hero-card {
+      position: relative;
+
+      width: min(700px, 94vw);
+
+      padding:
+        65px
+        30px;
+
+      text-align: center;
+
+      background:
+        rgba(255, 255, 255, 0.70);
+
+      backdrop-filter: blur(5px);
+
+      border:
+        1px solid
+        rgba(185, 149, 85, 0.55);
+
+      box-shadow:
+        0 25px 70px
+        rgba(80, 60, 40, 0.14);
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 80px;
+      height: 80px;
+
+      border: 1px solid #d3b67e;
+    }
+
+    .hero-card::before {
+      left: 12px;
+      top: 12px;
+
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .hero-card::after {
+      right: 12px;
+      bottom: 12px;
+
+      border-left: none;
+      border-top: none;
+    }
+
+    .small-title {
+      font-size: 11px;
+
+      letter-spacing: 5px;
+
+      text-transform: uppercase;
+
+      color: #96794f;
+    }
+
+    .main-names {
+      font-family: "Great Vibes", cursive;
+
+      font-size:
+        clamp(
+          58px,
+          12vw,
+          105px
+        );
+
+      font-weight: 400;
+
+      line-height: 1;
+
+      color: #9b7746;
+
+      margin:
+        22px
+        0
+        15px;
+    }
+
+    .and-symbol {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 0.55em;
+      color: #735d43;
+    }
+
+    .decorative-line {
+      width: 190px;
+      height: 1px;
+
+      background: #b99555;
+
+      margin:
+        25px
+        auto;
+
+      position: relative;
+    }
+
+    .decorative-line::after {
+      content: "✦";
+
+      position: absolute;
+
+      left: 50%;
+      top: 50%;
+
+      transform:
+        translate(
+          -50%,
+          -50%
+        );
+
+      background: rgba(255, 255, 255, 0.8);
+
+      padding:
+        0
+        10px;
+
+      color: #b99555;
+    }
+
+    .hero-text {
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size: 27px;
+
+      line-height: 1.4;
+    }
+
+    .scroll-message {
+      margin-top: 40px;
+
+      font-size: 10px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+      color: #a08c73;
+    }
+
+
+    /* =========================================================
+       INFORMATION SECTION
+    ========================================================= */
+
+    .information {
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 80px 20px;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,0.72),
+          rgba(255,255,255,0.88)
+        ),
+        url("assets/white_roses.jpg")
+        center / cover no-repeat;
+    }
+
+    .information-card {
+      width: min(720px, 94vw);
+
+      padding:
+        60px
+        28px;
+
+      text-align: center;
+
+      background:
+        rgba(255,253,249,0.90);
+
+      border:
+        1px solid
+        #d7c4a5;
+
+      box-shadow:
+        0 20px 60px
+        rgba(70,55,40,0.12);
+    }
+
+    .section-title {
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size: 45px;
+
+      font-weight: 600;
+
+      color: #765d3f;
+
+      margin-top: 15px;
+    }
+
+    .details {
+      max-width: 500px;
+
+      margin:
+        35px
+        auto
+        0;
+    }
+
+    .detail {
+      padding: 18px;
+
+      border-bottom:
+        1px solid
+        #e0d5c5;
+    }
+
+    .detail:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-size: 10px;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+
+      color: #a08257;
+
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size: 28px;
+
+      color: #55483a;
+    }
+
+
+    /* =========================================================
+       COUPLE SECTION
+    ========================================================= */
+
+    .couple {
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 70px 20px;
+
+      position: relative;
+
+      overflow: hidden;
+
+      background: #eddfc8;
+    }
+
+    .couple-background {
+      position: absolute;
+      inset: 0;
+
+      background:
+        url("assets/wedding_illustration.jpg")
+        center / cover no-repeat;
+    }
+
+    .couple-content {
+      position: relative;
+
+      width: min(650px, 94vw);
+
+      min-height: 650px;
+
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      text-align: center;
+
+      padding-top: 55px;
+    }
+
+    .couple-card {
+      width: min(500px, 100%);
+
+      padding:
+        30px
+        22px;
+
+      background:
+        rgba(255, 250, 242, 0.72);
+
+      backdrop-filter: blur(3px);
+
+      border-radius: 8px;
+    }
+
+    .couple-description {
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size: 25px;
+
+      line-height: 1.5;
+
+      margin-top: 20px;
+    }
+
+
+    /* =========================================================
+       INVITATION MESSAGE
+    ========================================================= */
+
+    .invitation {
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 80px 20px;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,0.68),
+          rgba(255,255,255,0.82)
+        ),
+        url("assets/gold_frame.jpg")
+        center / cover no-repeat;
+    }
+
+    .invitation-card {
+      width: min(720px, 94vw);
+
+      padding:
+        70px
+        28px;
+
+      text-align: center;
+
+      background:
+        rgba(255,255,255,0.86);
+
+      border:
+        1px solid
+        #b99555;
+
+      box-shadow:
+        0 25px 65px
+        rgba(70,50,25,0.13);
+    }
+
+    .invitation-text {
+      max-width: 600px;
+
+      margin:
+        25px
+        auto;
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size: 27px;
+
+      line-height: 1.5;
+    }
+
+    .hosts {
+      margin-top: 35px;
+
+      font-family:
+        "Great Vibes",
+        cursive;
+
+      font-size: 50px;
+
+      color: #8e6b3e;
+    }
+
+    .hosts-message {
+      margin-top: 15px;
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size: 24px;
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    footer {
+      text-align: center;
+
+      padding:
+        65px
+        20px
+        100px;
+
+      background: #f4eadc;
+    }
+
+    .footer-names {
+      font-family:
+        "Great Vibes",
+        cursive;
+
+      font-size: 55px;
+
+      color: #967143;
+    }
+
+    .footer-text {
+      margin-top: 12px;
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size: 23px;
+    }
+
+
+    /* =========================================================
+       MUSIC BUTTON
+    ========================================================= */
+
+    #musicButton {
+      position: fixed;
+
+      right: 18px;
+      bottom: 18px;
+
+      z-index: 500;
+
+      width: 52px;
+      height: 52px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        #c6a875;
+
+      background:
+        rgba(255,253,249,0.92);
+
+      color: #80633d;
+
+      cursor: pointer;
+
+      font-size: 21px;
+
+      box-shadow:
+        0 8px 25px
+        rgba(60,40,20,0.15);
+
+      transition:
+        transform .2s ease;
+    }
+
+    #musicButton:hover {
+      transform: scale(1.08);
+    }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 600px) {
+
+      .opening-names {
+        font-size: 46px;
+      }
+
+      .hero-card {
+        padding:
+          50px
+          18px;
+      }
+
+      .main-names {
+        font-size: 64px;
+      }
+
+      .hero-text {
+        font-size: 23px;
+      }
+
+      .information-card {
+        padding:
+          50px
+          18px;
+      }
+
+      .section-title {
+        font-size: 38px;
+      }
+
+      .detail-value {
+        font-size: 25px;
+      }
+
+      .couple-content {
+        min-height: 620px;
+      }
+
+      .couple-description {
+        font-size: 22px;
+      }
+
+      .invitation-card {
+        padding:
+          55px
+          18px;
+      }
+
+      .invitation-text {
+        font-size: 23px;
+      }
+
+      .hosts {
+        font-size: 43px;
+      }
+
+      .hosts-message {
+        font-size: 21px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =======================================================
+       OPENING ENVELOPE
+  ======================================================== -->
+
+  <div id="openingScreen">
+
+    <div class="opening-content">
+
+      <div class="opening-small-title">
+        Сиздерге арналган чакыруу
+      </div>
+
+      <div class="opening-names">
+        Нуртилек & Айдана
+      </div>
+
+
+      <div
+        class="envelope-container"
+        id="envelope"
+        role="button"
+        tabindex="0"
+        aria-label="Чакыруу катын ачуу"
+      >
+
+        <div class="envelope-body">
+
+          <div class="envelope-message">
+            Биздин кубанычыбызга<br>
+            ортоктош болуңуздар
+          </div>
+
+        </div>
+
+
+        <div class="envelope-flap"></div>
+
+
+        <div class="envelope-seal">
+          N & A
+        </div>
+
+      </div>
+
+
+      <div class="open-text">
+        КОНВЕРТТИ БАСЫП АЧЫҢЫЗ
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =======================================================
+       MAIN WEBSITE
+  ======================================================== -->
+
+  <main id="mainWebsite">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="hero-card">
+
+        <div class="small-title">
+          Тойго чакыруу
+        </div>
+
+
+        <h1 class="main-names">
+          Нуртилек
+          <span class="and-symbol">&</span>
+          Айдана
+        </h1>
+
+
+        <div class="decorative-line"></div>
+
+
+        <p class="hero-text">
+          Сиздерди кубанычтуу күнүбүздө<br>
+          ак дасторконубузга күтөбүз.
+        </p>
+
+
+        <div class="scroll-message">
+          Төмөн сүрүп, чакырууну улантыңыз
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- INFORMATION -->
+
+    <section class="information">
+
+      <div class="information-card">
+
+        <div class="small-title">
+          КҮНҮБҮЗДҮ БЕЛГИЛЕП АЛЫҢЫЗ
+        </div>
+
+
+        <h2 class="section-title">
+          Тойдун дареги
+        </h2>
+
+
+        <div class="decorative-line"></div>
+
+
+        <div class="details">
+
+
+          <div class="detail">
+
+            <div class="detail-label">
+              Дареги
+            </div>
+
+            <div class="detail-value">
+              Аксы району, Кара-Жыгач
+            </div>
+
+          </div>
+
+
+          <div class="detail">
+
+            <div class="detail-label">
+              Ресторан
+            </div>
+
+            <div class="detail-value">
+              «Татына»
+            </div>
+
+          </div>
+
+
+          <div class="detail">
+
+            <div class="detail-label">
+              Башталышы
+            </div>
+
+            <div class="detail-value">
+              17:00
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- COUPLE -->
+
+    <section class="couple">
+
+      <div class="couple-background"></div>
+
+
+      <div class="couple-content">
+
+        <div class="couple-card">
+
+          <div class="small-title">
+            БИЗДИН КУБАНЫЧЫБЫЗ
+          </div>
+
+
+          <h2 class="section-title">
+            Өзгөчө күн
+          </h2>
+
+
+          <div class="decorative-line"></div>
+
+
+          <p class="couple-description">
+
+            Бул күн биз үчүн өзгөчө мааниге ээ.
+
+            <br><br>
+
+            Сиздердин келишиңиздер
+            майрамыбызды дагы да
+            көркүнө чыгарат.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- INVITATION -->
+
+    <section class="invitation">
+
+      <div class="invitation-card">
+
+
+        <div class="small-title">
+          УРМАТТУУ КОНОКТОРУБУЗ
+        </div>
+
+
+        <h2 class="section-title">
+          Сиздерди күтөбүз!
+        </h2>
+
+
+        <div class="decorative-line"></div>
+
+
+        <p class="invitation-text">
+
+          Тойубузга келип,
+          ак дасторкондон даам сызып,
+          сый көрүп, биз менен бирге
+          кубанычыбызды бөлүшүп
+          кетишиңиздерди каалайбыз.
+
+        </p>
+
+
+        <div class="hosts">
+          Дилшод & Жанара
+        </div>
+
+
+        <p class="hosts-message">
+
+          Келип, сый көрүп,
+          конок болуп кетиниздер!
+
+        </p>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+      <div class="footer-names">
+        Нуртилек & Айдана
+      </div>
+
+
+      <p class="footer-text">
+        Сиздер менен бул күн дагы да кооз болот.
+      </p>
+
+    </footer>
+
+
+  </main>
+
+
+
+  <!-- =======================================================
+       MUSIC
+  ======================================================== -->
+
+  <audio
+    id="weddingMusic"
+    loop
+    preload="auto"
+  >
+
+    <source
+      src="music.mp3"
+      type="audio/mpeg"
+    >
+
+  </audio>
+
+
+  <!-- MUSIC BUTTON -->
+
+  <button
+    id="musicButton"
+    aria-label="Музыканы күйгүзүү же өчүрүү"
+  >
+    ♫
+  </button>
+
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+  ======================================================== -->
+
+  <script>
+
+    const openingScreen =
+      document.getElementById(
+        "openingScreen"
+      );
+
+    const envelope =
+      document.getElementById(
+        "envelope"
+      );
+
+    const mainWebsite =
+      document.getElementById(
+        "mainWebsite"
+      );
+
+    const weddingMusic =
+      document.getElementById(
+        "weddingMusic"
+      );
+
+    const musicButton =
+      document.getElementById(
+        "musicButton"
+      );
+
+
+    let invitationOpened = false;
+
+
+    /*
+      Open invitation
+    */
+
+    async function openInvitation() {
+
+      if (invitationOpened) {
+        return;
+      }
+
+      invitationOpened = true;
+
+
+      /*
+        Animate envelope
+      */
+
+      envelope.classList.add(
+        "opened"
+      );
+
+
+      /*
+        Start music after user interaction.
+        Modern browsers allow audio
+        after a user click/tap.
+      */
+
+      try {
+
+        await weddingMusic.play();
+
+        musicButton.textContent = "♫";
+
+      } catch (error) {
+
+        console.log(
+          "Music could not start automatically."
+        );
+
+      }
+
+
+      /*
+        Hide opening screen
+      */
+
+      setTimeout(() => {
+
+        openingScreen.classList.add(
+          "hide"
+        );
+
+        mainWebsite.classList.add(
+          "show"
+        );
+
+        document.body.style.overflow =
+          "auto";
+
+      }, 1000);
+
+    }
+
+
+    /*
+      Mouse / touchscreen
+    */
+
+    envelope.addEventListener(
+      "click",
+      openInvitation
+    );
+
+
+    /*
+      Keyboard accessibility
+    */
+
+    envelope.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+
+          event.preventDefault();
+
+          openInvitation();
+
+        }
+
+      }
+    );
+
+
+    /*
+      Music button
+    */
+
+    musicButton.addEventListener(
+      "click",
+      async function() {
+
+        if (
+          weddingMusic.paused
+        ) {
+
+          try {
+
+            await weddingMusic.play();
+
+            musicButton.textContent =
+              "♫";
+
+          } catch (error) {
+
+            console.log(
+              "Music playback error."
+            );
+
+          }
+
+        } else {
+
+          weddingMusic.pause();
+
+          musicButton.textContent =
+            "🔇";
+
+        }
+
+      }
+    );
+
+
+    /*
+      Prevent scrolling before
+      invitation is opened.
+    */
+
+    document.body.style.overflow =
+      "hidden";
+
+  </script>
+
+</body>
+</html>
